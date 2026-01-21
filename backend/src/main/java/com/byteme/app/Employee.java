@@ -37,4 +37,22 @@ public class Employee {
 
     @Column(nullable = false, updatable = false)
     private Instant createdAt = Instant.now();
+
+    public Employee() {}
+
+    public UUID getEmployeeId() {return employeeId;}
+    public void setEmployeeId(UUID employeeId) {this.employeeId = employeeId;}
+    public Organisation getOrganisation() {return organisation;}
+    public void setOrganisation(Organisation organisation) {this.organisation = organisation;}
+    public UserAccount getUser() {return user;}
+    public void setUser(UserAccount user) {this.user = user;}
+    public String getDisplayName() {return displayName;}
+    public void setDisplayName(String displayName) {this.displayName = displayName;}
+    public Integer getCurrentStreakWeeks() {return currentStreakWeeks;}
+    public void setCurrentStreakWeeks(Integer currentStreakWeeks) {this.currentStreakWeeks = currentStreakWeeks;}
+    public Integer getBestStreakWeeks() {return bestStreakWeeks;}
+    public void setBestStreakWeeks(Integer bestStreakWeeks) {this.bestStreakWeeks = bestStreakWeeks;}
+    public LocalDate getLastRescueWeekStart() {return lastRescueWeekStart;}
+    public void setLastRescueWeekStart(LocalDate lastRescueWeekStart) {this.lastRescueWeekStart = lastRescueWeekStart;}
+    public Instant getCreatedAt() {return createdAt;}
 }
