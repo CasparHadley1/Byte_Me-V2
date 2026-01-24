@@ -205,7 +205,7 @@ public class ReservationController {
         UUID employeeId;
         Integer quantity;
 
-		// Getters
+		/// Getters
         public UUID getPostingId() { return postingId; }
         public UUID getOrganisationId() { return organisationId; }
         public UUID getEmployeeId() { return employeeId; }
@@ -227,7 +227,7 @@ public class ReservationController {
         String sellerName;
         String sellerLocation;
 
-		// Getters
+		/// Getters
         public UUID getReservationId() { return reservationId; }
         public String getClaimCode() { return claimCode; }
         public String getClaimCodeLast4() { return claimCodeLast4; }
@@ -260,7 +260,7 @@ public class ReservationController {
         boolean success;
         String message;
 
-		// Getters
+		/// Getters
         public boolean isSuccess() { return success; }
         public String getMessage() { return message; }
 

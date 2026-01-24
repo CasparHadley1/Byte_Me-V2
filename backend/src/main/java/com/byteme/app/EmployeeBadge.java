@@ -6,7 +6,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "employee_badge")
-@Data @NoArgsConstructor @AllArgsConstructor @Builder
+ @Builder
 @IdClass(EmployeeBadge.Key.class)
 public class EmployeeBadge {
 
@@ -27,7 +27,7 @@ public class EmployeeBadge {
     @Column(nullable = false)
     private Instant awardedAt = Instant.now();
 
-	/ Getters
+	// Getters
     public UUID getEmployeeId() { return employeeId; }
     public UUID getBadgeId() { return badgeId; }
     public Employee getEmployee() { return employee; }
@@ -41,12 +41,12 @@ public class EmployeeBadge {
     public void setBadge(Badge badge) { this.badge = badge; }
     public void setAwardedAt(Instant awardedAt) { this.awardedAt = awardedAt; }
 
-    @Data @NoArgsConstructor @AllArgsConstructor
+    
     public static class Key implements java.io.Serializable {
         private UUID employeeId;
         private UUID badgeId;
 
-		// Getters
+		/// Getters
         public UUID getEmployeeId() { return employeeId; }
         public UUID getBadgeId() { return badgeId; }
 

@@ -22,7 +22,7 @@ public class Organisation {
     private Instant createdAt = Instant.now();
 
 
-    // Getters
+    /// Getters
     public UUID getOrgId() { return orgId; }
     public String getName() { return name; }
     public String getLocationText() { return locationText; }

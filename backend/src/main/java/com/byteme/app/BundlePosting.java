@@ -63,7 +63,7 @@ public class BundlePosting {
         return quantityTotal - quantityReserved;
     }
 
-	// Getters
+	/// Getters
     public UUID getPostingId() { return postingId; }
     public Seller getSeller() { return seller; }
     public Category getCategory() { return category; }

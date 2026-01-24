@@ -26,7 +26,7 @@ public class RescueEvent {
     private Integer mealsEstimate;
     private Integer co2eEstimateGrams;
 
-	// Getters
+	/// Getters
     public UUID getEventId() { return eventId; }
     public Employee getEmployee() { return employee; }
     public Reservation getReservation() { return reservation; }

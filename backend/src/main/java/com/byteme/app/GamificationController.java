@@ -16,7 +16,7 @@ public class GamificationController {
     private final BadgeRepository badgeRepo;
     private final EmployeeBadgeRepository employeeBadgeRepo;
 
-	// Getters
+	/// Getters
     public EmployeeRepository getEmployeeRepo() { return employeeRepo; }
     public RescueEventRepository getRescueEventRepo() { return rescueEventRepo; }
     public BadgeRepository getBadgeRepo() { return badgeRepo; }
@@ -69,7 +69,7 @@ public class GamificationController {
         int bestStreakWeeks;
         java.time.LocalDate lastRescueWeekStart;
 
-		// Getters
+		/// Getters
         public int getCurrentStreakWeeks() { return currentStreakWeeks; }
         public int getBestStreakWeeks() { return bestStreakWeeks; }
         public java.time.LocalDate getLastRescueWeekStart() { return lastRescueWeekStart; }
@@ -87,7 +87,7 @@ public class GamificationController {
         int currentStreakWeeks;
         int badgesEarned;
 
-		// Getters
+		/// Getters
         public int getTotalRescues() { return totalRescues; }
         public int getTotalMealsSaved() { return totalMealsSaved; }
         public double getTotalCo2eSavedKg() { return totalCo2eSavedKg; }

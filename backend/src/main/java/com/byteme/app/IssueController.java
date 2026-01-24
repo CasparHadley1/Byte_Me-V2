@@ -1,6 +1,5 @@
 package com.byteme.app;
 
-import lombok.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +17,7 @@ public class IssueController {
     private final ReservationRepository reservationRepo;
     private final EmployeeRepository employeeRepo;
 
-	// Getters
+	/// Getters
     public IssueReportRepository getIssueRepo() { 
         return issueRepo; 
     }
@@ -86,7 +85,7 @@ public class IssueController {
     }
 
     // DTOs
-    @Data @NoArgsConstructor @AllArgsConstructor
+    
     public static class CreateIssueRequest {
         UUID postingId;
         UUID reservationId;
@@ -94,7 +93,7 @@ public class IssueController {
         IssueReport.Type type;
         String description;
 
-		// Getters
+		/// Getters
         public UUID getPostingId() { return postingId; }
         public UUID getReservationId() { return reservationId; }
         public UUID getEmployeeId() { return employeeId; }
@@ -109,12 +108,12 @@ public class IssueController {
         public void setDescription(String description) { this.description = description; }
     }
 
-    @Data @NoArgsConstructor @AllArgsConstructor
+    
     public static class RespondRequest {
         String response;
         boolean resolve;
 
-		/ Getters
+		// Getters
         public String getResponse() { return response; }
         public boolean isResolve() { return resolve; }
 

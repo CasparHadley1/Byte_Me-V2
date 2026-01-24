@@ -108,7 +108,7 @@ public class BundleController {
         Integer estimatedWeightGrams;
         boolean activate;
 
-		// Getters
+		/// Getters
         public UUID getCategoryId() { return categoryId; }
         public Instant getPickupStartAt() { return pickupStartAt; }
         public Instant getPickupEndAt() { return pickupEndAt; }
@@ -140,7 +140,7 @@ public class BundleController {
         String contentsText;
         String allergensText;
 
-		// Getters
+		/// Getters
         public Integer getQuantityTotal() { return quantityTotal; }
         public Integer getPriceCents() { return priceCents; }
         public Integer getDiscountPct() { return discountPct; }

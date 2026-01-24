@@ -22,6 +22,7 @@ public class Reservation {
     private BundlePosting posting;
 	public void setBundlePosting(BundlePosting bundlePostingValue) { this.posting = bundlePostingValue; }
 	public BundlePosting getBundlePosting() { return this.posting; }
+    public BundlePosting getPosting() { return this.posting; }
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "org_id")

@@ -73,7 +73,7 @@ public class AuthController {
         String businessName; // for sellers
         String location;     // for sellers
 		
-		// Getters
+		/// Getters
         public String getEmail() { return email; }
         public String getPassword() { return password; }
         public UserAccount.Role getRole() { return role; }
@@ -92,7 +92,7 @@ public class AuthController {
         String email;
         String password;
 		
-		// Getters
+		/// Getters
         public String getEmail() { return email; }
         public String getPassword() { return password; }
 
@@ -107,7 +107,7 @@ public class AuthController {
         String email;
         UserAccount.Role role;
 
-		// Getters
+		/// Getters
         public String getToken() { return token; }
         public UUID getUserId() { return userId; }
         public String getEmail() { return email; }

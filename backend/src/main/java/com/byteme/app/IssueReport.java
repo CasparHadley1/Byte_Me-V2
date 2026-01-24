@@ -46,7 +46,7 @@ public class IssueReport {
 
     private Instant resolvedAt;
 
-	// Getters
+	/// Getters
     public UUID getIssueId() { return issueId; }
     public BundlePosting getPosting() { return posting; }
     public Reservation getReservation() { return reservation; }

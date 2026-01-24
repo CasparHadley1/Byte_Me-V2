@@ -29,7 +29,7 @@ public class UserAccount {
     @Column(nullable = false, updatable = false)
     private Instant createdAt = Instant.now();
 
-	// Getters
+	/// Getters
     public UUID getUserId() { return userId; }
     public String getEmail() { return email; }
     public String getPasswordHash() { return passwordHash; }

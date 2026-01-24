@@ -103,7 +103,7 @@ public class AnalyticsController {
         int wasteAvoidedGrams;
         int openIssueCount;
 
-		// Getters
+		/// Getters
         public String getSellerName() { return sellerName; }
         public int getTotalBundlesPosted() { return totalBundlesPosted; }
         public int getTotalQuantity() { return totalQuantity; }
@@ -133,7 +133,7 @@ public class AnalyticsController {
         double collectionRate;
         double noShowRate;
 
-        // Getters
+        /// Getters
         public int getCollected() { return collected; }
         public int getNoShow() { return noShow; }
         public int getExpired() { return expired; }
@@ -157,7 +157,7 @@ public class AnalyticsController {
         String co2eAssumption;
         String mealsAssumption;
 
-        // Getters
+        /// Getters
         public int getBundlesCollected() { return bundlesCollected; }
         public int getWeightSavedGrams() { return weightSavedGrams; }
         public double getCo2eSavedKg() { return co2eSavedKg; }

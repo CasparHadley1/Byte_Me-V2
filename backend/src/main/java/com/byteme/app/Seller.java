@@ -26,7 +26,7 @@ public class Seller {
     @Column(nullable = false, updatable = false)
     private Instant createdAt = Instant.now();
 
-	// Getters
+	/// Getters
     public UUID getSellerId() { return sellerId; }
     public UserAccount getUser() { return user; }
     public String getName() { return name; }
