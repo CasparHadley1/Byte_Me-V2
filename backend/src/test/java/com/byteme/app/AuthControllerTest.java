@@ -1,19 +1,18 @@
 package com.byteme.app;
 
+import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.any;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
@@ -28,38 +27,52 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 class AuthControllerTest {
 
     private MockMvc mockMvc;
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @Mock private UserAccountRepository userRepo;
     @Mock private SellerRepository sellerRepo;
     @Mock private OrganisationRepository orgRepo;
     @Mock private PasswordEncoder passwordEncoder;
-    @Mock private JwtUtil jwtUtil;
-    @Mock private SecurityContext securityContext;
-    @Mock private Authentication authentication;
+    
+    private JwtUtil jwtUtil;
 
-    @InjectMocks
     private AuthController authController;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        
+        String testSecret = "my_super_secret_key_32_characters_long_minimum";
+        jwtUtil = new JwtUtil(testSecret, 3600000L);
+        
+        authController = new AuthController(userRepo, sellerRepo, orgRepo, passwordEncoder, jwtUtil);
+        
         mockMvc = MockMvcBuilders.standaloneSetup(authController).build();
-        SecurityContextHolder.setContext(securityContext);
     }
 
     @Test
-    void testDTOAccessors() {
-        // Testing the inner class RegisterRequest
+    void testRegister_SellerSuccess() throws Exception {
         AuthController.RegisterRequest req = new AuthController.RegisterRequest();
-        req.setLocation("New York");
-        assertEquals("New York", req.getLocation());
-        
-        // Fix: Use AuthController.AuthResponse
-        AuthController.AuthResponse res = new AuthController.AuthResponse(
-            "tok", UUID.randomUUID(), UUID.randomUUID(), "e@e.com", UserAccount.Role.SELLER
-        );
-        assertEquals("tok", res.getToken());
+        req.setEmail("new@test.com");
+        req.setPassword("pass");
+        req.setRole(UserAccount.Role.SELLER);
+        req.setBusinessName("Bakery");
+
+        when(userRepo.existsByEmail(any())).thenReturn(false);
+        when(passwordEncoder.encode(any())).thenReturn("hashed");
+        when(userRepo.save(any())).thenAnswer(i -> {
+            UserAccount u = i.getArgument(0);
+            u.setUserId(UUID.randomUUID());
+            return u;
+        });
+
+        mockMvc.perform(post("/api/auth/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(req)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.token").exists());
+
+        verify(sellerRepo).save(any(Seller.class));
     }
 
     @Test
@@ -76,35 +89,44 @@ class AuthControllerTest {
 
         when(userRepo.findByEmail(req.getEmail())).thenReturn(Optional.of(user));
         when(passwordEncoder.matches(any(), any())).thenReturn(true);
-        when(jwtUtil.generateToken(any(), any(), any())).thenReturn("mocked-jwt-token");
 
         mockMvc.perform(post("/api/auth/login")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(req)))
+                .content(mapper.writeValueAsString(req)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.token").value("mocked-jwt-token"))
+                .andExpect(jsonPath("$.token").exists())
                 .andExpect(jsonPath("$.email").value("test@byteme.com"));
     }
 
     @Test
-    void testMe_ReturnsProfile() throws Exception {
+    void testMe_Success() throws Exception {
         UUID mockUserId = UUID.randomUUID();
         UserAccount user = new UserAccount();
         user.setUserId(mockUserId);
         user.setRole(UserAccount.Role.SELLER);
 
-        // Mock SecurityContextHolder behavior
-        when(securityContext.getAuthentication()).thenReturn(authentication);
-        when(authentication.getPrincipal()).thenReturn(mockUserId);
+        SecurityContextHolder.getContext().setAuthentication(
+            new UsernamePasswordAuthenticationToken(mockUserId, null, Collections.emptyList())
+        );
+
         when(userRepo.findById(mockUserId)).thenReturn(Optional.of(user));
-        
-        // Mock Seller lookup
-        Seller seller = new Seller();
-        seller.setSellerId(UUID.randomUUID());
-        when(sellerRepo.findByUserUserId(mockUserId)).thenReturn(Optional.of(seller));
 
         mockMvc.perform(get("/api/auth/me"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.profileId").value(seller.getSellerId().toString()));
+                .andExpect(jsonPath("$.userId").value(mockUserId.toString()));
+    }
+
+    @Test
+    void testLogin_Failure() throws Exception {
+        AuthController.LoginRequest req = new AuthController.LoginRequest();
+        req.setEmail("wrong@test.com");
+        req.setPassword("wrong");
+
+        when(userRepo.findByEmail(any())).thenReturn(Optional.empty());
+
+        mockMvc.perform(post("/api/auth/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(req)))
+                .andExpect(status().isUnauthorized());
     }
 }

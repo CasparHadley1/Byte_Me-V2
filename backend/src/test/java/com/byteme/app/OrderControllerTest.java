@@ -73,7 +73,6 @@ class OrderControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(req)))
                 .andExpect(status().isBadRequest())
-                // FIXED: containsString handles both "Text" and "\"Text\"" formats
                 .andExpect(content().string(containsString("Not enough bundles available")));
     }
 

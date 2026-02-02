@@ -14,7 +14,6 @@ class OrgOrderTest {
     void testDefaults() {
         OrgOrder order = new OrgOrder();
         
-        // Verifying code-level defaults without DB involvement
         assertEquals(1, order.getQuantity());
         assertEquals(OrgOrder.Status.RESERVED, order.getStatus());
         assertNotNull(order.getReservedAt());
@@ -23,13 +22,11 @@ class OrgOrderTest {
     @Test
     @DisplayName("Should handle relationship assignment without persistence")
     void testStateManagement() {
-        // Arrange
         OrgOrder order = new OrgOrder();
         Organisation mockOrg = new Organisation(); 
         BundlePosting mockPosting = new BundlePosting();
         UUID orderId = UUID.randomUUID();
 
-        // Act
         order.setOrderId(orderId);
         order.setOrganisation(mockOrg);
         order.setPosting(mockPosting);
@@ -37,7 +34,6 @@ class OrgOrderTest {
         order.setTotalPriceCents(5000);
         order.setStatus(OrgOrder.Status.COLLECTED);
 
-        // Assert
         assertEquals(orderId, order.getOrderId());
         assertEquals(mockOrg, order.getOrganisation());
         assertAll("Verify multiple fields",
@@ -52,7 +48,6 @@ class OrgOrderTest {
     void testEnumSafety() {
         OrgOrder order = new OrgOrder();
         
-        // Testing that the enum logic works in memory
         order.setStatus(OrgOrder.Status.CANCELLED);
         assertEquals("CANCELLED", order.getStatus().name());
         

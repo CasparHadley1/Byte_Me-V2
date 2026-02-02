@@ -26,7 +26,6 @@ class SellerRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        // Create parent user account
         sharedUser = new UserAccount();
         sharedUser.setEmail("vendor-" + UUID.randomUUID() + "@byteme.com");
         sharedUser.setPasswordHash("secure_hash");
@@ -37,24 +36,20 @@ class SellerRepositoryTest {
 
     @Test
     void testSaveAndFindSeller() {
-        // Arrange
         Seller seller = new Seller();
         seller.setName("The Sustainable Baker");
         seller.setUser(sharedUser);
         seller.setLocationText("Exeter High St");
 
-        // Act
         Seller saved = sellerRepo.save(seller);
         entityManager.flush();
         entityManager.clear();
 
         Optional<Seller> found = sellerRepo.findById(saved.getSellerId());
 
-        // Assert
         assertTrue(found.isPresent());
         assertEquals("The Sustainable Baker", found.get().getName());
         
-        // Use truncatedTo(ChronoUnit.MILLIS) to prevent nanosecond mismatch
         assertEquals(
             saved.getCreatedAt().truncatedTo(ChronoUnit.MILLIS), 
             found.get().getCreatedAt().truncatedTo(ChronoUnit.MILLIS)
@@ -63,7 +58,6 @@ class SellerRepositoryTest {
 
     @Test
     void testCreatedAtIsImmutable() {
-        // 1. Arrange: Persist a seller
         Seller seller = new Seller();
         seller.setName("Immutability Test");
         seller.setUser(sharedUser);
@@ -71,14 +65,11 @@ class SellerRepositoryTest {
         
         Instant originalTimestamp = firstSave.getCreatedAt();
 
-        // 2. Act: Attempt to modify the timestamp and save
-        // We simulate a significant change (1 hour later)
         firstSave.setCreatedAt(originalTimestamp.plus(1, ChronoUnit.HOURS));
         sellerRepo.save(firstSave);
         entityManager.flush();
-        entityManager.clear(); // Ensure we pull fresh from DB
+        entityManager.clear(); 
 
-        // 3. Assert: Verify the DB did NOT update the timestamp
         Seller retrieved = entityManager.find(Seller.class, firstSave.getSellerId());
         
         assertEquals(
@@ -90,18 +81,15 @@ class SellerRepositoryTest {
 
     @Test
     void testUpdateSellerDetails() {
-        // Arrange
         Seller seller = new Seller();
         seller.setName("Old Shop Name");
         seller.setUser(sharedUser);
         seller = entityManager.persistAndFlush(seller);
 
-        // Act
         seller.setName("New Shop Name");
         sellerRepo.save(seller);
         entityManager.flush();
 
-        // Assert
         Seller updated = entityManager.find(Seller.class, seller.getSellerId());
         assertEquals("New Shop Name", updated.getName());
     }

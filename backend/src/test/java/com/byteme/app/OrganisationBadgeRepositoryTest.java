@@ -26,7 +26,6 @@ class OrganisationBadgeRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        // 1. Create User & Organisation
         UserAccount user = new UserAccount();
         user.setEmail("badge-org-" + UUID.randomUUID() + "@test.com");
         user.setPasswordHash("hash");
@@ -38,7 +37,6 @@ class OrganisationBadgeRepositoryTest {
         sharedOrg.setUser(user);
         entityManager.persist(sharedOrg);
 
-        // 2. Create Badge
         sharedBadge = new Badge();
         sharedBadge.setCode("FIRST_ORDER");
         sharedBadge.setName("First Order");
@@ -50,31 +48,24 @@ class OrganisationBadgeRepositoryTest {
 
     @Test
     void testSaveAndFindOrganisationBadge() {
-        // Arrange
         OrganisationBadge orgBadge = new OrganisationBadge();
-        // Since columns are insertable = false via the entity object, 
-        // we set the IDs directly for the @Id fields
         orgBadge.setOrgId(sharedOrg.getOrgId());
         orgBadge.setBadgeId(sharedBadge.getBadgeId());
         orgBadge.setAwardedAt(Instant.now());
 
-        // Act
         orgBadgeRepo.save(orgBadge);
         entityManager.flush();
         entityManager.clear();
 
-        // Use the Key class for lookup
         OrganisationBadge.Key key = new OrganisationBadge.Key();
         key.setOrgId(sharedOrg.getOrgId());
         key.setBadgeId(sharedBadge.getBadgeId());
 
         Optional<OrganisationBadge> found = orgBadgeRepo.findById(key);
 
-        // Assert
         assertTrue(found.isPresent());
         assertEquals(sharedOrg.getOrgId(), found.get().getOrgId());
         assertEquals(sharedBadge.getBadgeId(), found.get().getBadgeId());
-        // Verify relationship mapping
         assertNotNull(found.get().getOrganisation());
         assertEquals("Eco Warriors", found.get().getOrganisation().getName());
         assertEquals("FIRST_ORDER", found.get().getBadge().getCode());
@@ -82,7 +73,6 @@ class OrganisationBadgeRepositoryTest {
 
     @Test
     void testFindBadgesByOrganisation() {
-        // Arrange: Create another badge and link it
         Badge secondBadge = new Badge();
         secondBadge.setCode("STREAK_4");
         secondBadge.setName("4 Week Streak");
@@ -93,10 +83,7 @@ class OrganisationBadgeRepositoryTest {
         
         entityManager.flush();
 
-        // Act - Assuming your repository has this method:
-        // List<OrganisationBadge> results = orgBadgeRepo.findByOrgId(sharedOrg.getOrgId());
         
-        // Assert: Verify existence in DB
         OrganisationBadge.Key key = new OrganisationBadge.Key();
         key.setOrgId(sharedOrg.getOrgId());
         key.setBadgeId(secondBadge.getBadgeId());

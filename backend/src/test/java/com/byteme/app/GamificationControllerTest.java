@@ -40,13 +40,10 @@ class GamificationControllerTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        // 1. Create and configure the ObjectMapper strictly for the test environment
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
-        // This line prevents the [2023, 10, 1] array format
         objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 
-        // 2. Build MockMvc using the configured mapper
         mockMvc = MockMvcBuilders.standaloneSetup(gamificationController)
                 .setMessageConverters(new MappingJackson2HttpMessageConverter(objectMapper))
                 .build();
@@ -62,10 +59,10 @@ class GamificationControllerTest {
 
         when(orgRepo.findById(orgId)).thenReturn(Optional.of(org));
 
-        // Now this will correctly match the String "2023-10-01"
         mockMvc.perform(get("/api/gamification/streak/{orgId}", orgId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.currentStreakWeeks").value(5))
+                .andExpect(jsonPath("$.bestStreakWeeks").value(10))
                 .andExpect(jsonPath("$.lastOrderWeekStart").value("2023-10-01"));
     }
 
@@ -78,11 +75,14 @@ class GamificationControllerTest {
         org.setBestStreakWeeks(8);
 
         when(orgRepo.findById(orgId)).thenReturn(Optional.of(org));
-        when(orgBadgeRepo.findByOrgId(orgId)).thenReturn(Collections.singletonList(new OrganisationBadge()));
+        
+        OrganisationBadge badge = new OrganisationBadge();
+        when(orgBadgeRepo.findByOrgId(orgId)).thenReturn(Collections.singletonList(badge));
 
         mockMvc.perform(get("/api/gamification/stats/{orgId}", orgId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.totalOrders").value(50))
+                .andExpect(jsonPath("$.currentStreakWeeks").value(3))
                 .andExpect(jsonPath("$.badgesEarned").value(1));
     }
 
@@ -96,7 +96,7 @@ class GamificationControllerTest {
     }
 
     @Test
-    void testGetAllBadges() throws Exception {
+    void testGetAllBadges_Empty() throws Exception {
         when(badgeRepo.findAll()).thenReturn(Collections.emptyList());
 
         mockMvc.perform(get("/api/gamification/badges"))
@@ -105,12 +105,20 @@ class GamificationControllerTest {
     }
 
     @Test
-    void testDTOAccessors() {
-        LocalDate date = LocalDate.now();
-        GamificationController.StreakResponse streak = new GamificationController.StreakResponse(1, 2, date);
-        assertEquals(1, streak.getCurrentStreakWeeks());
+    void testDTOFullCoverage() {
+        LocalDate date = LocalDate.of(2026, 2, 1);
         
-        GamificationController.StatsResponse stats = new GamificationController.StatsResponse(10, 5, 10, 3);
-        assertEquals(10, stats.getTotalOrders());
+        GamificationController.StreakResponse streak = new GamificationController.StreakResponse(2, 5, date);
+        
+        assertEquals(2, streak.getCurrentStreakWeeks());
+        assertEquals(5, streak.getBestStreakWeeks());
+        assertEquals(date, streak.getLastOrderWeekStart());
+        
+        GamificationController.StatsResponse stats = new GamificationController.StatsResponse(100, 10, 20, 15);
+        
+        assertEquals(100, stats.getTotalOrders());
+        assertEquals(10, stats.getCurrentStreakWeeks());
+        assertEquals(20, stats.getBestStreakWeeks());
+        assertEquals(15, stats.getBadgesEarned());
     }
 }

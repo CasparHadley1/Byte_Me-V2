@@ -43,12 +43,10 @@ class IssueControllerTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         
-        // 1. Configure the test-specific mapper to handle Instant/LocalDate as Strings
         ObjectMapper testMapper = new ObjectMapper();
         testMapper.registerModule(new JavaTimeModule());
         testMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 
-        // 2. Setup MockMvc with the converter
         mockMvc = MockMvcBuilders.standaloneSetup(issueController)
                 .setMessageConverters(new MappingJackson2HttpMessageConverter(testMapper))
                 .build();
@@ -88,7 +86,6 @@ class IssueControllerTest {
         req.setOrderId(UUID.randomUUID());
         req.setDescription("Missing items");
         
-        // DYNAMIC FIX: Uses values()[0] so it compiles regardless of your specific Enum names
         if (IssueReport.Type.values().length > 0) {
             req.setType(IssueReport.Type.values()[0]);
         }

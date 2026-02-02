@@ -22,9 +22,11 @@ class CategoryTest {
         category.setName("Bakery");
 
         Category saved = entityManager.persistAndFlush(category);
+        entityManager.clear();
 
-        assertNotNull(saved.getCategoryId());
-        assertEquals("Bakery", saved.getName());
+        Category found = entityManager.find(Category.class, saved.getCategoryId());
+        assertNotNull(found);
+        assertEquals("Bakery", found.getName());
     }
 
     @Test
@@ -32,7 +34,6 @@ class CategoryTest {
         Category category = new Category();
         category.setName(null);
 
-        // Catching RuntimeException handles both Spring and Hibernate exception types
         assertThrows(RuntimeException.class, () -> {
             entityManager.persistAndFlush(category);
         });
@@ -47,15 +48,24 @@ class CategoryTest {
         Category cat2 = new Category();
         cat2.setName("Produce");
 
-        // Catching RuntimeException prevents the "expected DataIntegrity but got ConstraintViolation" error
         assertThrows(RuntimeException.class, () -> {
             entityManager.persistAndFlush(cat2);
         });
     }
 
     @Test
+    void testIdGeneration() {
+        Category category = new Category();
+        category.setName("Dairy");
+
+        Category saved = entityManager.persistAndFlush(category);
+        
+        assertNotNull(saved.getCategoryId());
+    }
+
+    @Test
     void testGettersAndSetters() {
-        UUID id = UUID.randomUUID();
+        UUID id = UUID.fromString("9e6e782f-c229-416f-b5d5-65853b4c91ba");
         Category category = new Category();
         
         category.setCategoryId(id);
