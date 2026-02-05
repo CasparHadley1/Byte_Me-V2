@@ -8,9 +8,8 @@ export default function PrivacyPage() {
         Last updated: February 04, 2026
       </p>
 
-      {/* Scroll Box */}
       <div className="border rounded-lg shadow-inner h-[70vh] overflow-y-scroll p-6 bg-white">
-        <div className="prose prose-lg max-w-none">
+        <div className="prose prose-lg max-w-none space-y-4">
           <h2>Privacy Notice</h2>
           <p>
             This Privacy Notice for <strong>ByteMe</strong> ("we", "us", or "our"),
@@ -19,9 +18,9 @@ export default function PrivacyPage() {
             services ("Services"), including when you:
           </p>
 
-          <ul>
+          <ul className="ml-6">
             <li>
-              Visit our website at <a href="http://www.ByteMe.com">http://www.ByteMe.com</a> or any website of ours that links to this Privacy Notice
+              Visit our website at <a href="http://www.ByteMeExe.com">http://www.ByteMeExe.com</a> or any website of ours that links to this Privacy Notice
             </li>
             <li>
               Use ByteMe. A marketplace connecting surplus food with the people who can actually use it.
@@ -42,7 +41,7 @@ export default function PrivacyPage() {
             This summary provides key points from our Privacy Notice.
           </p>
 
-          <ul>
+          <ul className="ml-6">
             <li>We process personal information depending on how you use our services.</li>
             <li>We may process sensitive information with consent.</li>
             <li>We do not collect information from third parties.</li>
@@ -54,7 +53,7 @@ export default function PrivacyPage() {
             We collect personal information that you voluntarily provide to us.
           </p>
 
-          <ul>
+          <ul className="ml-6">
             <li>Phone numbers</li>
             <li>Email addresses</li>
             <li>Usernames</li>
@@ -65,7 +64,7 @@ export default function PrivacyPage() {
           </ul>
 
           <h2>2. How Do We Process Your Information?</h2>
-          <ul>
+          <ul className="ml-6">
             <li>Account creation and authentication</li>
             <li>Service delivery</li>
             <li>Customer support</li>
@@ -74,7 +73,7 @@ export default function PrivacyPage() {
           </ul>
 
           <h2>3. Legal Bases</h2>
-          <ul>
+          <ul className="ml-6">
             <li>Consent</li>
             <li>Contract</li>
             <li>Legal obligation</li>
@@ -128,7 +127,7 @@ export default function PrivacyPage() {
 
           <h2>13. Contact</h2>
           <p>
-            Email: <a href="mailto:privacy@byteme.com">privacy@byteme.com</a>
+            Email: <a href="mailto:privacy@bytemeexe.com">privacy@bytemeexe.com</a>
           </p>
 
           <h2>14. Review or Delete Data</h2>
@@ -144,5 +143,6 @@ export default function PrivacyPage() {
     </main>
   );
 }
+
 
 
