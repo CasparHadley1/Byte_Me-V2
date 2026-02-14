@@ -100,9 +100,10 @@ export const ordersApi = {
       headers: { Authorization: `Bearer ${token}` },
     }),
 
-  collect: (id: string, token: string) =>
+  collect: (id: string, claimCode: string, token: string) =>
     fetchApi(`/orders/${id}/collect`, {
       method: 'POST',
+      body: JSON.stringify({ claimCode }),
       headers: { Authorization: `Bearer ${token}` },
     }),
 

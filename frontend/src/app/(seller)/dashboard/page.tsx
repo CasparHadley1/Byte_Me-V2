@@ -54,11 +54,13 @@ export default function SellerDashboardPage() {
 
   async function handleCollect(id: string) {
     if (!token) return;
+    const claimCode = window.prompt("Enter the 6-digit claim code shown by the organisation:");
+    if (!claimCode) return;
     try {
-      await ordersApi.collect(id, token);
+      await ordersApi.collect(id, claimCode, token);
       await loadData();
     } catch {
-      setError("Failed to collect order.");
+      setError("Invalid claim code or failed to collect order.");
     }
   }
 
