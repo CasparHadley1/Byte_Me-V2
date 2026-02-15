@@ -44,7 +44,7 @@ export default function Footer() {
       <div className="border-t border-[var(--gray-800)]">
         <div className="max-w-7xl mx-auto px-4 py-6 text-center">
           <p className="text-sm text-[var(--gray-400)]">
-            © {new Date().getFullYear()} Byte Me. Licensed under <a href="/LICENSE">Apache 2.0 </a>.
+            © {new Date().getFullYear()} Byte Me. Licensed under <a href="/license">Apache 2.0 </a>.
           </p>
         </div>
       </div>
