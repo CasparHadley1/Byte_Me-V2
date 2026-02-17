@@ -104,6 +104,25 @@ npm run dev
 http://localhost:3000**
 
 ---
+### 3) Run the whole test 
+```bash 
+cd backend
+mvn clean test 
+```
+
+** Maven will output the results to the terminal. Detailed reports can be found in: target/surefire-reports/
+
+### 4) Run specific test class
+```bash
+cd backend  
+mvn test -Dtest=AnytestInsideOfTestfiles
+```
+
+### 5) Run specific test method
+```bash 
+cd backend 
+mvn test -Dtest=BundleControllerTest#testGetById_Success
+```
 
 ## API Endpoints
 
