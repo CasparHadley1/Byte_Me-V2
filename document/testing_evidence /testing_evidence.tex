@@ -10,6 +10,7 @@
 \usepackage{xcolor}
 \usepackage{media9} 
 \usepackage{hyperref}
+\usepackage[table]{xcolor}
 
 \title{Byte Me Application: Testing Evidence Report}
 \author{Team Name: Byte Me}
@@ -160,32 +161,55 @@ Entities are the basic building blocks of our app. We test them to make sure the
 
 % --- Section 8: Manual Testing Video Evidence ---
 \section{Manual User Acceptance Testing (Video Evidence)}
-\textbf{What was done:} 
-\begin{itemize}
-    \item Performed a live screen recording of the end-to-end user journey.
-    \item Demonstrated real-time interaction between Seller and Organisation roles.
-    \item Validated UI responsiveness and dynamic badge awards.
-\end{itemize}
+
+\textbf{Overview:} 
+To complement our automated suite, we performed a  end-to-end manual walkthrough. This recording demonstrates the live synchronization between the Seller and Organization (Consumer) roles, confirming the full cycle of a food bundle from creation to collection.
 
 \noindent \textbf{Justification:}
-While automated tests verify the logic, this video serves as proof of a functional User Experience . It captures the system's responsiveness and verifies that all components (Frontend, Backend, and Database) are synchronized in a live production environment.
+This video acts as a comprehensive "walkthrough" of the most critical user path for our application. By recording this manual session, we prove that the integration between the frontend UI and the Spring Boot backend is seamless and that the database correctly handles transactional changes (like stock reservation) in a live environment.
+
+\subsection*{Walkthrough Key Actions \& Timestamps}
+\begin{table}[H]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabular}{|l|p{8cm}|c|}
+        \hline
+        \rowcolor{gray!10} \textbf{Phase} & \textbf{Action Performed} & \textbf{Timestamp} \\ \hline
+        \textbf{Registration} & Seller Sign-up: Creating a business profile & [00:05] \\ \cline{2-3}
+        & Organization Sign-up: Creating a consumer profile & [00:30] \\ \hline
+        \textbf{Seller Flow} & Profile Navigation: Viewing settings and dashboard & [00:36] \\ \cline{2-3}
+        & \textbf{Bundle Creation:} Posting new food surplus for rescue & [01:00] \\ \hline
+        \textbf{Organization} & Listing Discovery: Viewing & [02:40] \\ \cline{2-3}
+        \textbf{Workflow} & \textbf{Reservation 1:} Booking a bundle and generating code & [02:50] \\ \cline{2-3}
+        & Active Claims: Viewing reservations tab & [03:00] \\ \cline{2-3}
+        & \textbf{Cancellation:} Testing the order reversal logic & [03:40] \\ \cline{2-3}
+        & \textbf{Reservation 2:} Re-booking and new code generation & [04:00] \\ \hline
+        \textbf{Collection} & \textbf{Handover:} Using confirmation code for pickup & [04:06] \\ \cline{2-3}
+        & Seller Dashboard: Verifying "Collected" status & [04:20] \\ \cline{2-3}
+        & Consumer Dashboard: Final status update verification & [04:30] \\ \hline
+        \textbf{Persistence} & \textbf{Persistence Check:} Logging out and back in successfully & [05:00] \\ \hline
+        \textbf{Impact} & \textbf{Environmental Impact:} Viewing CO2 and forecast stats & [05:18] \\ \cline{2-3}
+        & \textbf{Achievements:} Reviewing "First Rescue" badge & [05:35] \\ \hline
+    \end{tabular}
+    \caption{Manual Testing Time-Log: Seller and Consumer Integration}
+\end{table}
 
 \begin{figure}[H]
     \centering
     \includemedia[
-      width=1\linewidth,
-      height=0.7\linewidth,
+      width=0.9\linewidth,
+      height=0.5\linewidth,
       activate=onclick,
       addresource=Manual Testing.mp4, 
-      flashvars={
-        source=manual_test.mp4
-        &autoPlay=false
-      }
-    ]{ \includegraphics[width=1\linewidth]{video_poster.png} }{VPlayer.swf}
+      flashvars={source=Manual Testing.mp4 & autoPlay=false}
+    ]{ \includegraphics[width=0.9\linewidth]{video_poster.png} }{VPlayer.swf}
     \caption{Manual Testing Demonstration: Live Application Walkthrough}
 \end{figure}
 
-\noindent \textbf{Note:} To view the embedded video, please open this PDF in \textbf{Adobe Acrobat Reader}. If viewing in a web browser, please use the provided external links for the video evidence. 
-\url{https://youtu.be/UPZanjSiRqk}
+\noindent \textbf{Note:} To play the embedded video, please open this PDF in \textbf{Adobe Acrobat Reader}. Alternatively, access the video via the direct link below:
 
+\begin{center}
+    \url{https://youtu.be/5NwwiJ71_DY}
+\end{center}
 \end{document}
