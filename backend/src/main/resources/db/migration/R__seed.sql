@@ -486,6 +486,19 @@ INSERT INTO seller_metrics_weekly (
   ('80000000-0000-0000-0000-000000000002', date_trunc('week', now())::date - 7,  3, 33, 27, 3, 3, 0.82, 22500)
 ON CONFLICT DO NOTHING;
 
+-- 9) Forecast actions (sellers recording what they did based on recommendations)
+
+INSERT INTO forecast_action (action_id, seller_id, posting_id, action_type, notes, created_at) VALUES
+  ('fc000000-0000-0000-0000-000000000001', '80000000-0000-0000-0000-000000000001', '60000000-0000-0000-0000-000000000001',
+   'REDUCED_QUANTITY', 'Reduced bakery bundle from 18 to 12 based on demand forecast', NOW() - INTERVAL '5 days'),
+  ('fc000000-0000-0000-0000-000000000002', '80000000-0000-0000-0000-000000000001', '60000000-0000-0000-0000-000000000002',
+   'ADJUSTED_DISCOUNT', 'Increased discount from 30% to 40% on hot meals to improve sell-through', NOW() - INTERVAL '3 days'),
+  ('fc000000-0000-0000-0000-000000000003', '80000000-0000-0000-0000-000000000001', NULL,
+   'CHANGED_WINDOW', 'Shifted produce bundles from morning to lunch window after seeing higher demand', NOW() - INTERVAL '1 day'),
+  ('fc000000-0000-0000-0000-000000000004', '80000000-0000-0000-0000-000000000002', '60000000-0000-0000-0000-000000000005',
+   'REDUCED_QUANTITY', 'Cut sandwich posting from 15 to 10 per forecast recommendation', NOW() - INTERVAL '2 days')
+ON CONFLICT (action_id) DO NOTHING;
+
 -- Bulk data to fill out the platform with realistic volume
 INSERT INTO category (category_id, name) VALUES
   ('55555555-5555-5555-5555-555555555555', 'Sandwiches'),

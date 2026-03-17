@@ -252,4 +252,16 @@ export const forecastApi = {
     fetchApi(`/forecast/evaluate/${sellerId}`, {
       headers: { Authorization: `Bearer ${token}` },
     }),
+
+  recordAction: (sellerId: string, data: { actionType: string; notes?: string; postingId?: string }, token: string) =>
+    fetchApi(`/forecast/actions/${sellerId}`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: { Authorization: `Bearer ${token}` },
+    }),
+
+  actions: (sellerId: string, token: string) =>
+    fetchApi(`/forecast/actions/${sellerId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }),
 };

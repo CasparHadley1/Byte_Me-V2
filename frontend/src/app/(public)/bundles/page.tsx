@@ -82,8 +82,8 @@ export default function BundlesPage() {
                 </div>
                 <div className="bundle-footer">
                   <div>
-                    <span className="bundle-price">${formatPrice(discounted)}</span>
-                    {b.discountPct > 0 && <span className="bundle-original-price">${formatPrice(b.priceCents)}</span>}
+                    <span className="bundle-price">£{formatPrice(discounted)}</span>
+                    {b.discountPct > 0 && <span className="bundle-original-price">£{formatPrice(b.priceCents)}</span>}
                   </div>
                   <span className="btn btn-primary btn-sm">View</span>
                 </div>
