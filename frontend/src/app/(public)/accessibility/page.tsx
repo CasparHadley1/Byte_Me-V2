@@ -70,7 +70,7 @@ export default function CookiePage() {
             <span className="basic-information website-name">ByteMe</span>:
           </p>
           <ol className="technical-information accessibility-limitations">
-            <li><strong>All pages</strong>: Text to speech page reader not implemented because It is not included in this iteration of the website. We plan to implement in the next iteration. .</li>
+            <li><strong>Text to speech</strong>: A &quot;Read Aloud&quot; button is available on all pages (bottom-right corner) using the browser&apos;s built-in speech synthesis. It reads the main content of the current page. Voice quality and availability may vary between browsers and operating systems.</li>
           </ol>
           <h3>Assessment approach</h3>
           <p>

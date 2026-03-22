@@ -655,3 +655,35 @@ body {
   color: var(--foreground);
   line-height: 1.5;
 }
+
+/* Read aloud button */
+.read-aloud-btn {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 50;
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background-color: var(--gray-800);
+  color: var(--white);
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.2);
+  transition: background-color 150ms ease;
+}
+
+.read-aloud-btn:hover {
+  background-color: var(--gray-700);
+}
+
+@media (prefers-color-scheme: dark) {
+  .read-aloud-btn {
+    background-color: var(--gray-200);
+    color: var(--gray-900);
+  }
+  .read-aloud-btn:hover {
+    background-color: var(--gray-300);
+  }
+}
